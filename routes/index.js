@@ -1,4 +1,6 @@
 var express = require('express');
+const userController = require('../modules/user/userController');
+const authMiddleware = require('../middlewares/authMiddleware');
 var router = express.Router();
 
 /* GET home page. */
