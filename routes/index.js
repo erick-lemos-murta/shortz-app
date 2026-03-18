@@ -1,6 +1,7 @@
 var express = require('express');
 const userController = require('../modules/user/userController');
 const authMiddleware = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/multer');
 var router = express.Router();
 
 /* GET home page. */
@@ -26,8 +27,16 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 
 // Rota para exibir o feed de vídeos (protegida por autenticação)
-router.get('/feed', authMiddleware, (req, res) => {
-   res.render('home', { user: req.session.user });
+router.get('/feed', authMiddleware, async (req, res) => {
+  const user = await userController.getProfile(req.session.user.id);
+   res.render('home', { user });
 });
+
+router.get('/profile/edit', authMiddleware, async (req, res) => {
+    const user = await userController.getProfile(req.session.user.id);
+    res.render('edit-profile', { user });
+});
+
+router.post('/profile/edit', authMiddleware, upload.single('profilePicture'), userController.updateProfile);
 
 module.exports = router;
