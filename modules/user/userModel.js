@@ -19,13 +19,13 @@ const User = sequelize.define(
       username: {
          type: DataTypes.STRING,
          allowNull: false,
-         unique: true
+         unique: 'idx_unique_username'
       },
       // campo email
       email: {
          type: DataTypes.STRING,
          allowNull: false,
-         unique: true,
+         unique: 'idx_unique_email',
          validate: { isEmail: true }
       },
       // campo password
@@ -58,6 +58,10 @@ const User = sequelize.define(
       isAdmin: {
          type: DataTypes.BOOLEAN,
          defaultValue: false
+      },
+      videosCount: { 
+         type: DataTypes.INTEGER, 
+         defaultValue: 0 
       }
    },
    // 3º parâmetro: comportamento do banco
@@ -65,7 +69,11 @@ const User = sequelize.define(
       // cria automaticamente createdAt e updatedAt
       timestamps: true, 
       // define o nome da tabela
-      tableName: 'users'
+      tableName: 'users',
+      indexes:[
+         {unique: true, fields: ['username'], name: 'idx_unique_username'},
+         {unique: true, fields: ['email'], name: 'idx_unique_email'}
+      ]
    }
 );
 

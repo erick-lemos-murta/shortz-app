@@ -7,7 +7,8 @@ const session = require('express-session');
 const flash = require('connect-flash');
 
 var indexRouter = require('./routes/index');
-var userRoutes = require("./modules/user/userRoutes");  
+var userRoutes = require("./modules/user/userRoutes"); 
+var videoRoutes = require("./modules/video/videoRoutes");
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use("/", userRoutes);
+app.use("/", videoRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -55,11 +57,11 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('../error');
 });
 
+require("./config/associations"); 
 const sequelize = require('./config/database');
-const User = require('./modules/user/userModel');
 sequelize.sync({alter:true});//faz as alterações/criações de tabelas dentro do banco
 
 sequelize.authenticate()
