@@ -62,7 +62,9 @@ const User = sequelize.define(
       videosCount: { 
          type: DataTypes.INTEGER, 
          defaultValue: 0 
-      }
+      },
+      followersCount: { type: DataTypes.INTEGER, defaultValue: 0 },
+      followingCount: { type: DataTypes.INTEGER, defaultValue: 0 }
    },
    // 3º parâmetro: comportamento do banco
    {
