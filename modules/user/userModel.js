@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 // importa o objeto 'sequelize' de 'config/database.js'
 const sequelize = require('../../config/database');
 
+
 // define a estrutura da entidade User (tabela users)
 const User = sequelize.define(
    // 1º parametro: nome da entidade

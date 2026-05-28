@@ -3,6 +3,7 @@ var router = express.Router();
 const userController = require("./userController");
 const authMiddleware = require("../../middlewares/authMiddleware");
 const upload = require("../../middlewares/profileMulter");
+const videoController = require("../video/videoController");
 
 // Rota para exibir o formulário de cadastro
 router.get("/register", (req, res) => {

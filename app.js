@@ -9,6 +9,8 @@ const flash = require('connect-flash');
 var indexRouter = require('./routes/index');
 var userRoutes = require("./modules/user/userRoutes"); 
 var videoRoutes = require("./modules/video/videoRoutes");
+var likeRoutes = require("./modules/like/likeRoutes");
+var commentRoutes = require("./modules/comment/commentRoutes");
 
 var app = express();
 
@@ -43,6 +45,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use("/", userRoutes);
 app.use("/", videoRoutes);
+app.use("/", likeRoutes);
+app.use("/", commentRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -62,7 +66,9 @@ app.use(function(err, req, res, next) {
 
 require("./config/associations"); 
 const sequelize = require('./config/database');
-sequelize.sync({alter:true});//faz as alterações/criações de tabelas dentro do banco
+sequelize.sync({ alter: true })
+    .then(() => console.log("Banco de dados sincronizado!"))
+    .catch(err => console.error("Erro ao sincronizar banco:", err));//faz as alterações/criações de tabelas dentro do banco
 
 sequelize.authenticate()
   .then(()=> console.log("Conexão Ok"))
